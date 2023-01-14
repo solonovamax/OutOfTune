@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Collision : MonoBehaviour {
+public class Collision : MonoBehaviour, Interactable {
     // Start is called before the first frame update
     public  SpriteRenderer sr;
     public  Sprite         NewSprite;
@@ -19,8 +19,17 @@ public class Collision : MonoBehaviour {
             gameObject.GetComponentInChildren<SpriteRenderer>().sprite = NewSprite;
         }
     }
+
+    private void interact(Collision2D player) {
+        Debug.Log("Interaction");
+    }
     /*  private void OnCollisionExit2D(Collision2D other)
       {
           tag = "Player";
       }*/
+    public void playerInteraction(Player player) {
+        Debug.Log("Interaction");
+
+        // throw new System.NotImplementedException();
+    }
 }
