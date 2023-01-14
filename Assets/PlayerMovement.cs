@@ -1,92 +1,39 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
-public class PlayerMovement : MonoBehaviour
-{
+public class PlayerMovement : MonoBehaviour {
+    public float playerSpeed = 5f;
 
-    public float speed = 5f;
-    public Rigidbody2D rb;
-    float HInput;
-    float VInput;
-    public Animator anim;
+    public Rigidbody2D    rb;
+    public Animator       anim;
     public SpriteRenderer sr;
-    private float nowtime = 0;
-    private float lasttime;
-    public float delay = 1f;
-   /* private float delay2 = 0.0f;*/
-    private float lasttime2;
-    private bool mouse = false;
-    public BoxCollider2D bc;
-    // Start is called before the first frame update
 
+    public  BoxCollider2D bc;
+    private float         _hInput;
+    private float         _vInput;
 
-    // Update is called once per frame
-    void Update()
-    {
-       HInput = Input.GetAxis("Horizontal");
-        VInput = Input.GetAxis("Vertical");
-        if (HInput != 0 || VInput != 0)
-        {
-            anim.SetFloat("Speed", 1);
-        }
-        else
-        {
-            anim.SetFloat("Speed", 0);
-        }
-        nowtime = Time.time;
+    // private static readonly int   animSpeedParameter    = Animator.StringToHash("Speed");
+    private static readonly int animIsMovingParameter    = Animator.StringToHash("IsMoving");
+    private static readonly int animIsAttackingParameter = Animator.StringToHash("IsAttacking");
 
+    /// <summary>
+    ///     Called once per frame
+    /// </summary>
+    private void Update() {
+        _hInput = Input.GetAxis("Horizontal");
+        _vInput = Input.GetAxis("Vertical");
 
-      /*  if (Input.GetMouseButtonDown(0) && nowtime - lasttime2 > delay2)
-        { mouse= true;
-            delay2 = 0.8f;
-        }
-        else { mouse = false; }*/
-
-       if (Input.GetMouseButtonDown(0))
-        { 
-            anim.SetBool("Trigger", true);
-            bc.enabled = true;
-            lasttime = nowtime;
-        }
-        if(nowtime-lasttime > delay)
-        {
-            anim.SetBool("Trigger", false);
-            bc.enabled = false;
-        }
-
-
-        if (mouse)
-        {
-            anim.SetBool("Trigger", true);
-            bc.enabled = true;
-            lasttime = nowtime;
-        }
-        if (nowtime - lasttime > delay)
-        {
-            anim.SetBool("Trigger", false);
-            bc.enabled = false;
-        }
+        anim.SetBool(animIsMovingParameter, _hInput >= 0.1 || _hInput <= -0.1 || _vInput >= 0.1 || _vInput <= -0.1);
+        anim.SetBool(animIsAttackingParameter, Input.GetMouseButtonDown(0));
     }
 
-    void FixedUpdate()
-    {
-
-        transform.position = transform.position + new Vector3(HInput * speed * Time.deltaTime, VInput * speed * Time.deltaTime, 0);
+    private void FixedUpdate() {
+        transform.position += new Vector3(_hInput * playerSpeed * Time.deltaTime, _vInput * playerSpeed * Time.deltaTime, 0);
 
 
-
-        if (HInput < 0 || VInput < 0)
-        {
+        if (_hInput < 0 || _vInput < 0)
             sr.flipX = true;
-
-        }
         else
-        {
             sr.flipX = false;
-        }
-
-
-
     }
 }
