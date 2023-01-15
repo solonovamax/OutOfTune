@@ -7,10 +7,6 @@ public class Chest : MonoBehaviour, Interactable {
     public  Collider2D     coll;
     private bool           canInteract;
 
-    /*  private void OnCollisionExit2D(Collision2D other)
-      {
-          tag = "Player";
-      }*/
     public void playerInteraction(Player player) {
         if (!canInteract)
             return;
