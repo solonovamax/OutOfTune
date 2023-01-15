@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.AI;
 
 public class Player : MonoBehaviour {
     private static readonly int   animIsMovingParameter    = Animator.StringToHash("IsMoving");

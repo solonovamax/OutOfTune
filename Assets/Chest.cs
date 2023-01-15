@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Chest : MonoBehaviour, Interactable {
@@ -8,10 +6,6 @@ public class Chest : MonoBehaviour, Interactable {
     public  Sprite         NewSprite;
     public  Collider2D     coll;
     private bool           canInteract;
-
-    private void interact(Collision2D player) {
-        Debug.Log("Interaction");
-    }
 
     /*  private void OnCollisionExit2D(Collision2D other)
       {
