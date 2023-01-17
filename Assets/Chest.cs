@@ -7,7 +7,7 @@ public class Chest : MonoBehaviour, Interactable {
     public  Collider2D     coll;
     private bool           canInteract;
 
-    public void playerInteraction(Player player) {
+    public void playerInteraction(PlayerController playerController) {
         if (!canInteract)
             return;
 

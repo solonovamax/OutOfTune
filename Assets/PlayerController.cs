@@ -1,18 +1,18 @@
 using UnityEngine;
-using UnityEngine.AI;
+using UnityEngine.Serialization;
 
-public class Player : MonoBehaviour {
+public class PlayerController : MonoBehaviour {
     private static readonly int   animIsMovingParameter    = Animator.StringToHash("IsMoving");
     private static readonly int   animIsAttackingParameter = Animator.StringToHash("IsAttacking");
     public                  float playerSpeed              = 5f;
 
-    public Rigidbody2D    rb;
-    public Animator       anim;
-    public SpriteRenderer sr;
+    public Animator animator;
 
-    public  BoxCollider2D bc;
-    private float         _hInput;
-    private float         _vInput;
+    [FormerlySerializedAs("sr")]
+    public SpriteRenderer spriteRenderer;
+
+    private float _hInput;
+    private float _vInput;
 
     /// <summary>
     ///     Called once per frame
@@ -21,17 +21,17 @@ public class Player : MonoBehaviour {
         _hInput = Input.GetAxis("Horizontal");
         _vInput = Input.GetAxis("Vertical");
 
-        anim.SetBool(animIsMovingParameter, _hInput >= 0.1 || _hInput <= -0.1 || _vInput >= 0.1 || _vInput <= -0.1);
-        anim.SetBool(animIsAttackingParameter, Input.GetMouseButtonDown(0));
+        animator.SetBool(animIsMovingParameter, _hInput >= 0.1 || _hInput <= -0.1 || _vInput >= 0.1 || _vInput <= -0.1);
+        animator.SetBool(animIsAttackingParameter, Input.GetMouseButtonDown(0));
     }
 
     private void FixedUpdate() {
         transform.position += new Vector3(_hInput * playerSpeed * Time.deltaTime, _vInput * playerSpeed * Time.deltaTime, 0);
 
         if (_hInput > 0.01 || _vInput > 0.01)
-            sr.flipX = false;
+            spriteRenderer.flipX = false;
         else if (_hInput < 0.01 || _vInput < 0.01)
-            sr.flipX = true;
+            spriteRenderer.flipX = true;
         // else
         //     sr.flipX = false;
 

@@ -1,3 +1,3 @@
 public interface Interactable {
-    public void playerInteraction(Player player);
+    public void playerInteraction(PlayerController playerController);
 }
